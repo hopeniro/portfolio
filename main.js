@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 let isMobile = window.innerWidth <= 768;
@@ -85,32 +84,6 @@ document.addEventListener('mousemove', onMove);
 document.addEventListener('touchmove', onMove, {passive: false});
 document.addEventListener('mouseup', onEnd);
 document.addEventListener('touchend', onEnd);
-
-// --- COMPUTER SHOWCASE ---
-const compContainer = document.getElementById('computer-canvas-container');
-const compScene = new THREE.Scene();
-const compCamera = new THREE.PerspectiveCamera(45, compContainer.clientWidth / compContainer.clientHeight, 0.1, 2000);
-compCamera.position.set(0, 0, 5);
-const compRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-compRenderer.setSize(compContainer.clientWidth, compContainer.clientHeight);
-compRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-compContainer.appendChild(compRenderer.domElement);
-compScene.add(new THREE.AmbientLight(0xffffff, 2.5));
-const compLight = new THREE.DirectionalLight(0xffffff, 1.5);
-compLight.position.set(5, 5, 5);
-compScene.add(compLight);
-const compControls = new OrbitControls(compCamera, compRenderer.domElement);
-compControls.enableDamping = true;
-compControls.enableZoom = false;
-
-let pcModel;
-new GLTFLoader().load('3d models/computer.glb', (gltf) => {
-    pcModel = gltf.scene;
-    let baseScale = window.innerWidth <= 768 ? 0.35 : 0.5;
-    pcModel.scale.set(baseScale, baseScale, baseScale);
-    pcModel.position.y = -0.5;
-    compScene.add(pcModel);
-});
 
 // --- WORKS CAROUSEL LOGIC ---
 const track = document.getElementById('carousel-track');
@@ -226,6 +199,7 @@ window.onclick = (e) => {
 // --- HEART GLITTER ---
 function initHeartGlitter() {
     const container = document.getElementById('heart-glitter-container');
+    if (!container) return;
     const hScene = new THREE.Scene();
     const hCamera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
     const hRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -271,33 +245,9 @@ if(contactForm) {
     });
 }
 
-function animate() {
-    requestAnimationFrame(animate);
-    const scrollY = window.scrollY;
-    if (pcModel) {
-        const pcSec = document.getElementById('computer-showcase');
-        const pcProg = Math.max(0, Math.min(1, (scrollY - pcSec.offsetTop) / (pcSec.offsetHeight - window.innerHeight)));
-        let baseS = isMobile ? 0.35 : 0.5;
-        let zoomFactor = isMobile ? 0.5 : 1.5;
-        const zoom = Math.min(1, pcProg / 0.5);
-        let s = baseS + (zoom * zoomFactor);
-        pcModel.scale.set(s, s, s);
-        if (pcProg > 0.7) pcModel.rotation.y += 0.01;
-        else pcModel.rotation.y = 0;
-        if (pcProg > 0.3 && !isMobile) {
-            const slide = (pcProg - 0.3) / 0.7;
-            compContainer.style.transform = `translateX(${20 * slide}%)`;
-        } else if (isMobile) {
-            compContainer.style.transform = `translateY(${pcProg * 10}px)`;
-        }
-        document.getElementById('pc-intro').classList.toggle('active', pcProg > 0.7);
-        compControls.update();
-        compRenderer.render(compScene, compCamera);
-    }
-}
-
-animate();
-window.onload = () => { initHeartGlitter(); };
+window.onload = () => { 
+    initHeartGlitter(); 
+};
 
 // Updated Scroll Listener with Skill Reveal
 window.addEventListener('scroll', () => {
@@ -309,11 +259,11 @@ window.addEventListener('scroll', () => {
     // Sequential Skill Reveal Logic
     const skillSection = document.getElementById('skills');
     const skillItems = document.querySelectorAll('.reveal-skill');
-    if (skillSection.getBoundingClientRect().top < window.innerHeight * 0.85) {
+    if (skillSection && skillSection.getBoundingClientRect().top < window.innerHeight * 0.85) {
         skillItems.forEach((item, index) => {
             setTimeout(() => {
                 item.classList.add('active');
-            }, index * 200); // 200ms delay between each logo
+            }, index * 200);
         });
     }
 });
@@ -322,5 +272,4 @@ window.addEventListener('resize', () => {
     isMobile = window.innerWidth <= 768;
     visibleItems = isMobile ? 1 : 2;
     updateCarousel();
-    compCamera.aspect = compContainer.clientWidth / compContainer.clientHeight; compCamera.updateProjectionMatrix(); compRenderer.setSize(compContainer.clientWidth, compContainer.clientHeight);
 });
