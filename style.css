@@ -108,11 +108,53 @@ section {
 .squish-letter { display: inline-block; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease; cursor: default; }
 .squish-letter:hover { transform: scale(1.4, 0.6) !important; color: var(--accent); }
 
+/* --- INTRO & GRAPHIC DESIGN LAYOUT --- */
+#intro-showcase { 
+    background: #000; 
+    padding: 120px 5vw; 
+}
+.showcase-layout { 
+    display: flex; 
+    width: 100%; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    align-items: center; 
+    justify-content: space-between; 
+    gap: 50px;
+}
+.intro-text { 
+    width: 43%; 
+    text-align: left; 
+}
+.intro-text h2 { 
+    font-family: 'Tenor Sans'; 
+    font-size: 3.5rem; 
+    color: var(--accent); 
+    margin-bottom: 15px; 
+}
+.intro-text p { 
+    font-size: 1.1rem; 
+    line-height: 1.8; 
+    color: #fff; 
+    opacity: 0.9;
+}
+.graphic-design-side {
+    width: 52%;
+    overflow: hidden;
+    background: transparent;
+}
+.graphic-design-side img {
+    width: 100%;
+    max-height: 550px;
+    display: block;
+    object-fit: contain;
+}
+
 /* --- SKILLS SECTION --- */
 #skills { padding: 100px 5vw; background: #000; }
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Ginawang 4 columns para sa ibisPaint */
+    grid-template-columns: repeat(4, 1fr);
     gap: 40px;
     max-width: 1200px;
     margin: 0 auto;
@@ -242,11 +284,11 @@ section {
 .digital-arts-text h4 { font-family: 'Tenor Sans'; font-size: 2.2rem; color: var(--accent); margin-bottom: 20px; text-transform: uppercase; }
 .digital-arts-text p { line-height: 1.8; color: #ccc; font-size: 1.05rem; }
 .digital-arts-frame { 
-    width: 35%; /* Reduced size */
-    background: transparent; /* Removed background */
-    padding: 0px; /* Removed padding */
+    width: 35%;
+    background: transparent;
+    padding: 0px;
     border-radius: 0px; 
-    border: none; /* Removed border */
+    border: none;
 }
 .digital-arts-frame img { width: 100%; border-radius: 10px; display: block; filter: brightness(0.9); transition: 0.5s; }
 .digital-arts-frame:hover img { filter: brightness(1.1); }
@@ -331,16 +373,6 @@ section {
 .detail-arrow.prev { left: 30px; }
 .detail-arrow.next { right: 30px; }
 
-/* --- COMPUTER SHOWCASE --- */
-#computer-showcase { height: 300vh; padding: 0; background: #000; }
-.computer-sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #000; }
-.showcase-layout { display: flex; width: 90%; max-width: 1400px; align-items: center; justify-content: flex-end; position: relative; }
-#computer-canvas-container { width: 100%; height: 85vh; cursor: grab; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); z-index: 10; touch-action: none; }
-.intro-text { position: absolute; left: 5%; width: 35%; text-align: left; opacity: 0; transform: translateX(-150px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; z-index: 11; }
-.intro-text.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
-.intro-text h2 { font-family: 'Tenor Sans'; font-size: 3.5rem; color: var(--accent); margin-bottom: 15px; }
-.intro-text p { font-size: 1.1rem; line-height: 1.6; opacity: 0.9; color: #fff; }
-
 /* --- RAKET SHOWCASE --- */
 #raket-showcase { background: #000; padding: 150px 5vw; }
 .raket-container { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; gap: 50px; }
@@ -372,7 +404,6 @@ section {
 .contact-form input, .contact-form textarea { background: transparent; border: none; border-bottom: 1px solid #333; padding: 10px 0; color: #fff; font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; }
 .contact-form input:focus, .contact-form textarea:focus { border-bottom-color: var(--accent); }
 
-/* --- FIX FOR WHITE BACKGROUND ON AUTOFILL --- */
 .contact-form input:-webkit-autofill,
 .contact-form input:-webkit-autofill:hover, 
 .contact-form input:-webkit-autofill:focus,
@@ -398,13 +429,13 @@ section {
     @keyframes typing { from { width: 0 } to { width: 120px; } }
     .float-img { width: 70px; }
     
-    #computer-showcase { height: 180vh; }
-    .showcase-layout { flex-direction: column; justify-content: flex-start; gap: 20px; }
-    .intro-text { position: relative; width: 100%; left: 0; text-align: center; transform: translateY(20px); margin-bottom: 0; }
-    .intro-text h2 { font-size: 2.2rem; }
-    #computer-canvas-container { height: 50vh; width: 100%; margin-top: -50px; }
+    .showcase-layout { flex-direction: column; text-align: center; gap: 40px; }
+    .intro-text { width: 100%; text-align: center; }
+    .intro-text h2 { font-size: 2.5rem; }
+    .graphic-design-side { width: 100%; max-width: 100%; }
+    .graphic-design-side img { max-height: 400px; }
 
-    .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; } /* 2 columns on mobile */
+    .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
     .skill-item img { width: 60px; height: 60px; }
 
     .carousel-item { min-width: 100%; }
